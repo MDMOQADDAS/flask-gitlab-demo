@@ -1,0 +1,24 @@
+stages:
+  - build
+  - test
+  - registery
+
+build job:
+  stage: build
+  script:
+    #replace username, container_name and version number
+    - docker build -t username/container_name:version .
+
+running test:
+  stage: test
+  script:
+    #write test case here
+    - echo "Test Pass"
+
+container registery:
+  stage: registery
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN $CI_REGISTRY
+  script:
+    #replace username, container_name and version number
+    docker push -t username/container_name:version
